@@ -7,7 +7,7 @@ import _ from 'lodash';
 
 const getAbsolutePath = (filePath) => path.resolve(process.cwd(), filePath);
 const readFile = (filePath) => fs.readFileSync(filePath, 'utf-8');
-// const getExtension = (file) => path.extname(file);
+
 
 const genDiff = (filepath1, filepath2) => {
   const file1data = JSON.parse(readFile(getAbsolutePath(filepath1))); 
