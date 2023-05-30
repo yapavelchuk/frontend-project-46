@@ -45,6 +45,9 @@
       "jsx",
       "ts",
       "tsx"
-    ]
+    ],
+    "transform": {
+      "^.+\\.js$": "babel-jest"
   }
+}
 }
