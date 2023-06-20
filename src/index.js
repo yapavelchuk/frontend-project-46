@@ -4,7 +4,7 @@ import parseData from './parser.js';
 import buildTree from './buildTree.js';
 import formatter from './formatters/index.js';
 
-const genDiff = (filepath1, filepath2, format = 'plain') => {
+const genDiff = (filepath1, filepath2, format) => {
   const file1data = parseData(filepath1);
   const file2data = parseData(filepath2);
   const tree = buildTree(file1data, file2data);

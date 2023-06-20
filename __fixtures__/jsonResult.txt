@@ -1,5 +1,0 @@
-{
-+ age: 24
-- name: Yana
-  status: true
-}
