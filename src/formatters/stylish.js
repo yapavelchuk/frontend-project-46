@@ -6,8 +6,8 @@ const generateSpacesWithoutSign = (depth) => ' '.repeat(depth * 4);
 const stringify = (node, depth) => {
   if (_.isObject(node)) {
     const entries = Object.entries(node);
-    const result = entries.map(([key, value]) => `${generateSpacesWithoutSign(depth + 1)}${key}: ${stringify(value, depth + 1)}`);
-    return `{\n${result.join('\n')}\n${generateSpacesWithoutSign(depth)}}`;
+    const result = entries.map(([key, value]) => `${generateSpacesWithoutSign(depth)}${key}: ${stringify(value, depth + 1)}`);
+    return `{\n${result.join('\n')}\n${generateSpacesWithoutSign(depth - 1)}}`;
   }
   return node;
 };
