@@ -35,7 +35,7 @@ const stylish = (ast) => {
           throw new Error(`Unexpected node type: ${node.type}`);
       }
     });
-    return `{\n${result.join('\n')}\n  ${generateSpacesWithoutSign(depth)}}`;
+    return `{\n${result.join('\n')}\n${generateSpacesWithoutSign(depth - 1)}}`;
   };
   return iter(ast, 1);
 };
