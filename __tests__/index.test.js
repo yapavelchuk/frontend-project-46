@@ -53,3 +53,11 @@ test('get plain comparison of YAML files', () => {
 
   expect(result).toEqual(expected);
 });
+
+test('get json comparison of YAML files', () => {
+  const filepathExpected = expectedPath('jsonResult.json');
+  const expected = readFile(getAbsolutePath(filepathExpected));
+  const result = genDiff(filepath('file1.yml'), filepath('file2.yaml'), 'json');
+
+  expect(result).toEqual(expected);
+});
