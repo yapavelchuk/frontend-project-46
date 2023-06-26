@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import parseData from './parser.js';
 import buildTree from './buildTree.js';
 import formatter from './formatters/index.js';
