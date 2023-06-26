@@ -14,9 +14,11 @@
 Node.js v19.1.0
 
 ### Установка
+````sh
 $ git clone https://github.com/yapavelchuk/frontend-project-46.git
 $ cd frontend-project-46
 $ make install
+````
 
 #### Cравнение плоских файлов 
 [![asciicast](https://asciinema.org/a/vyu5yJOH20p69cdlAuyULFH99.svg)](https://asciinema.org/a/vyu5yJOH20p69cdlAuyULFH99)
