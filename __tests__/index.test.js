@@ -46,7 +46,7 @@ test.each([
   {
     file1: yamlFile1, file2: yamlFile2, format: 'json', expectedResult: jsonResult,
   },
-])('test different scenarios', ({
+])('test different scenarios between %s and %s', ({
   file1, file2, format, expectedResult,
 }) => {
   expect(genDiff(file1, file2, format)).toBe(expectedResult);
