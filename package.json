@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "jest",
-    "lint": "npx eslint . --fix && stylelint **/*.scss && htmlhint **/*.html",
+    "lint": "npx eslint",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage --coverageReporters=text-lcov | coveralls",
     "codeclimate": "npm run test:coverage && codeclimate-test-reporter < coverage/lcov.info"
@@ -26,7 +26,6 @@
   "homepage": "https://github.com/yapavelchuk/frontend-project-46#readme",
   "dependencies": {
     "commander": "^10.0.0",
-    "expect": "^29.5.0",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21"
   },
