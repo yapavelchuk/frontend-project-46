@@ -18,9 +18,13 @@ const generateFilePath = (filepath, extension) => {
   };
 };
 
-const stylishResult = generateFilePath('stylishResult', 'txt').fileContent;
-const plainResult = generateFilePath('plainResult', 'txt').fileContent;
-const jsonResult = generateFilePath('jsonResult', 'txt').fileContent;
+const stylishResultData = generateFilePath('stylishResult', 'txt');
+const plainResultData = generateFilePath('plainResult', 'txt');
+const jsonResultData = generateFilePath('jsonResult', 'json');
+
+const stylishResult = stylishResultData.fileContent;
+const plainResult = plainResultData.fileContent;
+const jsonResult = jsonResultData.fileContent;
 
 const files = [
   {
