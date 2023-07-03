@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { test } from '@jest/globals';
+import { test, describe } from '@jest/globals';
 import genDiff from '../src/index.js';
 
 const fixturesPath = path.join(
@@ -9,78 +9,26 @@ const fixturesPath = path.join(
   '__fixtures__',
 );
 
-const generateFilePath = (filepath, extension) => {
-  const filePath = path.join(fixturesPath, `${filepath}.${extension}`);
-  const fileContent = fs.readFileSync(filePath, 'utf-8');
-  return {
-    filePath,
-    fileContent,
-  };
-};
+const getAbsolutePath = (filePath) => path.resolve(process.cwd(), filePath);
+const readFile = (filePath) => fs.readFileSync(filePath, 'utf-8');
+const getFilepath = (filepath) => path.join(fixturesPath, filepath);
+const expectedPath = (expectedFile) => path.join(fixturesPath, expectedFile);
 
-const stylishResultData = generateFilePath('stylishResult', 'txt');
-const plainResultData = generateFilePath('plainResult', 'txt');
-const jsonResultData = generateFilePath('jsonResult', 'json');
+const extensions = ['json', 'yml', 'yaml'];
+const formats = ['stylish', 'plain', 'json'];
 
-const stylishResult = stylishResultData.fileContent;
-const plainResult = plainResultData.fileContent;
-const jsonResult = jsonResultData.fileContent;
+describe.each(formats)('generate difference using %s format', (format) => {
+  describe.each(extensions)('for %s files', (extension) => {
+    const file1 = `file1.${extension}`;
+    const file2 = `file2.${extension}`;
 
-const files = [
-  {
-    file1: 'file1',
-    file2: 'file2',
-    extension: 'json',
-    expectedResult: stylishResult,
-  },
-  {
-    file1: 'file1',
-    file2: 'file2',
-    extension: 'json',
-    format: 'stylish',
-    expectedResult: stylishResult,
-  },
-  {
-    file1: 'file1',
-    file2: 'file2',
-    extension: 'json',
-    format: 'plain',
-    expectedResult: plainResult,
-  },
-  {
-    file1: 'file1',
-    file2: 'file2',
-    extension: 'json',
-    format: 'json',
-    expectedResult: jsonResult,
-  },
-  {
-    file1: 'file1',
-    file2: 'file2',
-    extension: 'yaml',
-    format: 'stylish',
-    expectedResult: stylishResult,
-  },
-  {
-    file1: 'file1',
-    file2: 'file2',
-    extension: 'yaml',
-    format: 'plain',
-    expectedResult: plainResult,
-  },
-  {
-    file1: 'file1',
-    file2: 'file2',
-    extension: 'yaml',
-    format: 'json',
-    expectedResult: jsonResult,
-  },
-];
+    const file1Path = getFilepath(file1);
+    const file2Path = getFilepath(file2);
 
-test.each(files)('generate difference between %p, %p', ({
-  file1, file2, extension, format, expectedResult,
-}) => {
-  const filePath1 = generateFilePath(file1, extension).filePath;
-  const filePath2 = generateFilePath(file2, extension).filePath;
-  expect(genDiff(filePath1, filePath2, format)).toBe(expectedResult);
+    const expectedResult = readFile(getAbsolutePath(expectedPath(`${format}Result.txt`)));
+
+    test(`generate difference between ${file1} and ${file2}`, () => {
+      expect(genDiff(file1Path, file2Path, format)).toBe(expectedResult);
+    });
+  });
 });
