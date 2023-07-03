@@ -16,7 +16,7 @@ const expectedPath = (expectedFile) => path.join(fixturesPath, expectedFile);
 
 const stylishResult = readFile(getAbsolutePath(expectedPath('stylishResult.txt')));
 const plainResult = readFile(getAbsolutePath(expectedPath('plainResult.txt')));
-const jsonResult = readFile(getAbsolutePath(expectedPath('jsonResult.json')));
+const jsonResult = readFile(getAbsolutePath(expectedPath('jsonResult.txt')));
 
 const jsonFile1 = getFilepath('file1.json');
 const jsonFile2 = getFilepath('file2.json');
