@@ -10,10 +10,10 @@ const stringify = (value) => {
   return value;
 };
 
-const plain = (ast) => {
-  const iter = (tree, path) => {
-    const result = tree.flatMap((node) => {
-      switch (node.type) {
+const plain = (tree) => {
+  const iter = (node, path) => {
+    const result = node.flatMap((currentNode) => {
+      switch (currentNode.type) {
         case 'nested':
           return iter(node.children, `${path}${node.name}.`);
         case 'added':
@@ -30,7 +30,7 @@ const plain = (ast) => {
     });
     return result.join('\n');
   };
-  return iter(ast, '');
+  return iter(tree, '');
 };
 
 export default plain;
