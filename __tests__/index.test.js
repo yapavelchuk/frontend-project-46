@@ -9,44 +9,74 @@ const fixturesPath = path.join(
   '__fixtures__',
 );
 
-const getAbsolutePath = (filePath) => path.resolve(process.cwd(), filePath);
-const readFile = (filePath) => fs.readFileSync(filePath, 'utf-8');
-const getFilepath = (filepath) => path.join(fixturesPath, filepath);
-const expectedPath = (expectedFile) => path.join(fixturesPath, expectedFile);
+const generateFilePath = (filepath, extension) => {
+  const filePath = path.join(fixturesPath, `${filepath}.${extension}`);
+  const fileContent = fs.readFileSync(filePath, 'utf-8');
+  return {
+    filePath,
+    fileContent,
+  };
+};
 
-const stylishResult = readFile(getAbsolutePath(expectedPath('stylishResult.txt')));
-const plainResult = readFile(getAbsolutePath(expectedPath('plainResult.txt')));
-const jsonResult = readFile(getAbsolutePath(expectedPath('jsonResult.txt')));
+const stylishResult = generateFilePath('stylishResult', 'txt').fileContent;
+const plainResult = generateFilePath('plainResult', 'txt').fileContent;
+const jsonResult = generateFilePath('jsonResult', 'txt').fileContent;
 
-const jsonFile1 = getFilepath('file1.json');
-const jsonFile2 = getFilepath('file2.json');
-const yamlFile1 = getFilepath('file1.yml');
-const yamlFile2 = getFilepath('file2.yaml');
+const files = [
+  {
+    file1: 'file1',
+    file2: 'file2',
+    extension: 'json',
+    expectedResult: stylishResult,
+  },
+  {
+    file1: 'file1',
+    file2: 'file2',
+    extension: 'json',
+    format: 'stylish',
+    expectedResult: stylishResult,
+  },
+  {
+    file1: 'file1',
+    file2: 'file2',
+    extension: 'json',
+    format: 'plain',
+    expectedResult: plainResult,
+  },
+  {
+    file1: 'file1',
+    file2: 'file2',
+    extension: 'json',
+    format: 'json',
+    expectedResult: jsonResult,
+  },
+  {
+    file1: 'file1',
+    file2: 'file2',
+    extension: 'yaml',
+    format: 'stylish',
+    expectedResult: stylishResult,
+  },
+  {
+    file1: 'file1',
+    file2: 'file2',
+    extension: 'yaml',
+    format: 'plain',
+    expectedResult: plainResult,
+  },
+  {
+    file1: 'file1',
+    file2: 'file2',
+    extension: 'yaml',
+    format: 'json',
+    expectedResult: jsonResult,
+  },
+];
 
-test.each([
-  {
-    file1: jsonFile1, file2: jsonFile2, expectedResult: stylishResult,
-  },
-  {
-    file1: jsonFile1, file2: jsonFile2, format: 'stylish', expectedResult: stylishResult,
-  },
-  {
-    file1: jsonFile1, file2: jsonFile2, format: 'plain', expectedResult: plainResult,
-  },
-  {
-    file1: jsonFile1, file2: jsonFile2, format: 'json', expectedResult: jsonResult,
-  },
-  {
-    file1: yamlFile1, file2: yamlFile2, format: 'stylish', expectedResult: stylishResult,
-  },
-  {
-    file1: yamlFile1, file2: yamlFile2, format: 'plain', expectedResult: plainResult,
-  },
-  {
-    file1: yamlFile1, file2: yamlFile2, format: 'json', expectedResult: jsonResult,
-  },
-])('generate difference between %p, %p', ({
-  file1, file2, format, expectedResult,
+test.each(files)('generate difference between %p, %p', ({
+  file1, file2, extension, format, expectedResult,
 }) => {
-  expect(genDiff(file1, file2, format)).toBe(expectedResult);
+  const filePath1 = generateFilePath(file1, extension).filePath;
+  const filePath2 = generateFilePath(file2, extension).filePath;
+  expect(genDiff(filePath1, filePath2, format)).toBe(expectedResult);
 });
