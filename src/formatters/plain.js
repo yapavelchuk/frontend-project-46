@@ -15,17 +15,17 @@ const plain = (tree) => {
     const result = node.flatMap((currentNode) => {
       switch (currentNode.type) {
         case 'nested':
-          return iter(node.children, `${path}${node.name}.`);
+          return iter(currentNode.children, `${path}${currentNode.name}.`);
         case 'added':
-          return `Property '${path}${node.name}' was added with value: ${stringify(node.value)}`;
+          return `Property '${path}${currentNode.name}' was added with value: ${stringify(currentNode.value)}`;
         case 'removed':
-          return `Property '${path}${node.name}' was removed`;
+          return `Property '${path}${currentNode.name}' was removed`;
         case 'unchanged':
           return [];
         case 'changed':
-          return `Property '${path}${node.name}' was updated. From ${stringify(node.valueBefore)} to ${stringify(node.valueAfter)}`;
+          return `Property '${path}${currentNode.name}' was updated. From ${stringify(currentNode.valueBefore)} to ${stringify(currentNode.valueAfter)}`;
         default:
-          throw new Error(`Unexpected node type: ${node.type}`);
+          throw new Error(`Unexpected node type: ${currentNode.type}`);
       }
     });
     return result.join('\n');
