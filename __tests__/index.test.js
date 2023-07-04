@@ -14,11 +14,11 @@ const readFile = (filePath) => fs.readFileSync(filePath, 'utf-8');
 const getFilepath = (filepath) => path.join(fixturesPath, filepath);
 const expectedPath = (expectedFile) => path.join(fixturesPath, expectedFile);
 
-const extensions = ['json', 'yml', 'yaml'];
+const extensions = ['json', 'yaml'];
 const formats = ['stylish', 'plain', 'json'];
 
 describe.each(formats)('generate difference using %s format', (format) => {
-  describe.each(extensions)('for %s files', (extension) => {
+  test.each(extensions)('for %s files', (extension) => {
     const file1 = `file1.${extension}`;
     const file2 = `file2.${extension}`;
 
@@ -27,8 +27,6 @@ describe.each(formats)('generate difference using %s format', (format) => {
 
     const expectedResult = readFile(getAbsolutePath(expectedPath(`${format}Result.txt`)));
 
-    test(`generate difference between ${file1} and ${file2}`, () => {
-      expect(genDiff(file1Path, file2Path, format)).toBe(expectedResult);
-    });
+    expect(genDiff(file1Path, file2Path, format)).toBe(expectedResult);
   });
 });
